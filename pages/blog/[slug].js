@@ -7,18 +7,21 @@ import matter from 'gray-matter'
 import hydrate from 'next-mdx-remote/hydrate'
 import renderToString from 'next-mdx-remote/render-to-string'
 import path from 'path'
-import Layout from '@/components/Layout'
+import Layout from '@/components/layout'
 // import { postFilePaths, POSTS_PATH } from '@/utils/posts/mdx-grab'
 
-// const BigLink = (props) => (
-//   <a className="text-xl color-blue-500" {...props}>
-//     {props.children}
-//   </a>
-// )
+const BigLink = (props) => (
+  <a className="text-xl color-blue-500" {...props}>
+    {props.children}
+  </a>
+)
 
-// const components = {
-//   // a: BigLink,
-// }
+const CodePen = () => <h1>Awesome Demo</h1>
+
+const components = {
+  a: BigLink,
+  CodePen,
+}
 
 const POSTS_PATH = path.join(process.cwd(), 'posts')
 
@@ -29,7 +32,7 @@ const postFilePaths = fs
   .filter((path) => /\.mdx?$/.test(path))
 
 const Post = ({ source, frontMatter }) => {
-  const content = hydrate(source, {})
+  const content = hydrate(source, { components })
   return <Layout>{content}</Layout>
 }
 Post.propTypes = {
@@ -46,7 +49,7 @@ export async function getStaticProps({ params }) {
   const { content, data } = matter(source)
 
   const mdxSource = await renderToString(content, {
-    // components,
+    components,
     // Optionally pass remark/rehype plugins
     mdxOptions: {
       remarkPlugins: [],
