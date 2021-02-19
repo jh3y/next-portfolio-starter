@@ -32,3 +32,6 @@ yarn-error.log*
 
 # vercel
 .vercel
+
+# Don't commit the config.yml for Netlify CMS. Have it copied over at build time.
+public/config.yml

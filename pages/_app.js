@@ -1,7 +1,10 @@
-import '../styles/globals.css'
+import 'tailwindcss/tailwind.css'
+import T from 'prop-types'
 
-function MyApp({ Component, pageProps }) {
-  return <Component {...pageProps} />
+const Portfolio = ({ Component, pageProps }) => <Component {...pageProps} />
+Portfolio.propTypes = {
+  Component: T.elementType,
+  pageProps: T.object,
 }
 
-export default MyApp
+export default Portfolio
