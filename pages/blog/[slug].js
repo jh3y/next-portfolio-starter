@@ -8,6 +8,7 @@ import hydrate from 'next-mdx-remote/hydrate'
 import renderToString from 'next-mdx-remote/render-to-string'
 import path from 'path'
 import Layout from '@/components/layout'
+// import CodePen from '@/components/CodePen'
 // import { postFilePaths, POSTS_PATH } from '@/utils/posts/mdx-grab'
 
 const BigLink = (props) => (
@@ -16,7 +17,9 @@ const BigLink = (props) => (
   </a>
 )
 
-const CodePen = () => <h1>Awesome Demo</h1>
+const CodePen = () => (
+  <h1 className="dark:text-red-500 text-5xl text-blue-500">Awesome Demo</h1>
+)
 
 const components = {
   a: BigLink,
