@@ -1,0 +1,7 @@
+[build]
+  command = "npm run build && npm run export"
+  publish = "out"
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Access-Control-Allow-Origin = "*"
