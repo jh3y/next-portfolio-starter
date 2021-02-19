@@ -1,5 +1,5 @@
 [build]
-  command = "npm run build && npm run export"
+  command = "yarn prod"
   publish = "out"
 [[headers]]
   for = "/*"
