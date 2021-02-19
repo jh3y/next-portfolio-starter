@@ -11,8 +11,8 @@
     "predeploy:prod": "yarn build && yarn export",
     "deploy:dryrun": "netlify deploy",
     "deploy:prod": "netlify deploy --prod",
-    "lint": "eslint pages/ functions/",
-    "lint-fix": "eslint pages/ functions/ --fix"
+    "lint": "eslint ./",
+    "lint-fix": "eslint ./ --fix"
   },
   "lint-staged": {
     "./**/*.{js,json,css}": [
