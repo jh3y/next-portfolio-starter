@@ -15,7 +15,7 @@
     "lint-fix": "eslint pages/ functions/ --fix"
   },
   "lint-staged": {
-    "{pages,components}/**/*.{js,json,css}": [
+    "./**/*.{js,json,css}": [
       "eslint",
       "prettier --write",
       "git add"
