@@ -2,7 +2,6 @@ import fs from 'fs'
 import matter from 'gray-matter'
 import Link from 'next/link'
 import path from 'path'
-import slugify from 'slugify'
 
 import Layout from '@/components/layout'
 
@@ -19,13 +18,13 @@ const Blog = ({ posts }) => {
     <Layout>
       <h1>Blog</h1>
       <ul>
-        {posts.map((post) => (
-          <li key={post.filePath}>
-            <Link href={`/blog/${encodeURIComponent(post.slug)}`}>
-              <a>{post.data.title}</a>
-            </Link>
-          </li>
-        ))}
+        {posts.map((post) => {
+          return (
+            <li key={post.filePath}>
+              <Link href={`/blog/${post.slug}`}>{post.data.title}</Link>
+            </li>
+          )
+        })}
       </ul>
     </Layout>
   )
@@ -42,9 +41,7 @@ export function getStaticProps() {
       content,
       data,
       filePath,
-      slug: slugify(filePath.toLowerCase(), {
-        remove: /[*+~.()'"!:@mdx]/gm,
-      }),
+      slug: filePath.replace(/\.mdx?$/, ''),
     }
   })
 

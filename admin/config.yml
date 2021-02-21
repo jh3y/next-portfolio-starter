@@ -2,30 +2,20 @@ backend:
   name: git-gateway
   branch: main # Branch to update (optional; defaults to master)
 publish_mode: editorial_workflow
-media_folder: "src/assets/images"
-public_folder: "/assets/images"
+media_folder: "public/images"
+public_folder: "/images"
 collections:
   - name: "standalone_pages"
     label: "Standalone Pages"
-    folder: "src/pages"
+    folder: "standalone-pages"
     slug: "{{slug}}"
-    # preview_path: "pages/{{slug}}"
+    file: "standalone-pages/{{slug}}.mdx"
     create: true
+    extension: mdx
+    format: frontmatter
     fields:
-      - {
-          label: "Layout",
-          name: "layout",
-          widget: "hidden",
-          default: "layouts/global.pug",
-        }
       - { label: "Title", name: "title", widget: "string" }
       - { label: "Class (handy html class appender)", name: "classname", widget: "string", required: false }
-      - {
-          label: "Permalink",
-          name: "permalink",
-          widget: "string",
-          required: false,
-        }
       - {
           label: "SEO Meta Title",
           name: "metaTitle",
@@ -39,26 +29,14 @@ collections:
           required: false,
         }
       - {
-          label: "Critical Style Path",
-          name: "criticalStyle",
-          widget: "string",
-          required: false,
-        }
-      - {
-          label: "Critical Script Path",
-          name: "criticalScript",
-          widget: "string",
-          required: false,
-        }
-      - {
-          label: "Style Path",
-          name: "Style",
+          label: "CSS Path",
+          name: "css",
           widget: "string",
           required: false,
         }
       - {
           label: "Script Path",
-          name: "Script",
+          name: "script",
           widget: "string",
           required: false,
         }
@@ -69,318 +47,31 @@ collections:
           required: false,
         }
       - { label: "Body", name: "body", widget: "markdown" }
-  - name: "Writing"
-    label: "Writing"
-    folder: "src/writing"
+  - name: "Posts"
+    label: "Posts"
+    folder: "posts"
+    extension: mdx
+    format: frontmatter
     create: true
     slug: "{{slug}}"
+    file: "posts/{{slug}}.mdx"
     fields:
-      - { label: "Tags", name: "tags", widget: "list", default: ["post"] }
-      - {
-          label: "Icon",
-          name: "icon",
-          widget: "select",
-          options:
-            [
-              "angular",
-              "streaming",
-              "design",
-              "greensock",
-              "javascript",
-              "css",
-              "react",
-              "animation",
-              "thoughts",
-              "eleventy",
-              "whimsy",
-              "health",
-              "gulp",
-              "node",
-            ],
-          required: false,
-        }
-      - {
-          label: "Featured",
-          name: "featured",
-          widget: "select",
-          options: ["csstricks", "smashing", "sitepoint", "uber", "dev"],
-          required: false,
-        }
-      - {
-          label: "Feature",
-          name: "feature",
-          widget: "boolean",
-          required: false,
-        }
       - { label: "Title", name: "title", widget: "string" }
+      - { label: "Tags", name: "tags", widget: "list", default: ["post"] }
       - {
           label: "Canonical",
           name: "canonical",
           widget: "string",
           required: false,
         }
-      - {
-          label: "Sub Title",
-          name: "subtitle",
-          widget: "string",
-          required: false,
-        }
-      - { label: "Publish Date", name: "date", widget: "date" }
-      - {
-          label: "Featured Image",
-          name: "headerImage",
-          widget: "image",
-          required: false,
-        }
-      - {
-          label: "Featured Image Attribution",
-          name: "headerImageCaption",
-          widget: "markdown",
-          required: false,
-        }
+      - { label: "Publish Date", name: "date", widget: "date", format: "MMM Do YY" }
       - { label: "Body", name: "body", widget: "markdown" }
-  - name: "Scrapbook"
-    label: "Scrapbook"
-    folder: "src/scrapbook"
-    create: true
-    slug: "{{slug}}"
-    fields:
-      - { label: "Tags", name: "tags", widget: "list", default: ["scrap"] }
-      - {
-          label: "Icon",
-          name: "icon",
-          widget: "select",
-          options:
-            [
-              "animation",
-              "angular",
-              "css",
-              "eleventy",
-              "design",
-              "greensock",
-              "gulp",
-              "health",
-              "javascript",
-              "node",
-              "react",
-              "streaming",
-              "thoughts",
-              "whimsy",
-            ],
-          required: false,
-        }
-      - { label: "Title", name: "title", widget: "string" }
-      - { label: "Last Updated", name: "date", widget: "date" }
-      - { label: "Body", name: "body", widget: "markdown" }
-  - name: "Blurbs"
-    label: "Blurbs"
-    folder: "src/blurbs"
-    create: true
-    slug: "{{name}}"
-    fields:
-      - { label: "Tags", name: "tags", widget: "hidden", default: "blurb" }
-      - { label: "Name", name: "name", widget: "string" }
-      - {
-          label: "Permalink",
-          name: "permalink",
-          widget: "hidden",
-          default: false,
-        }
-      - {
-          label: "Feature",
-          name: "feature",
-          widget: "boolean",
-          required: false,
-        }
-      - { label: "Body", name: "body", widget: "markdown" }
-  - name: "Testimonials"
-    label: "Testimonials"
-    folder: "src/testimonials"
-    create: true
-    slug: "{{author}}"
-    fields:
-      - {
-          label: "Permalink",
-          name: "permalink",
-          widget: "hidden",
-          default: false,
-        }
-      - {
-          label: "Tags",
-          name: "tags",
-          widget: "hidden",
-          default: "testimonial",
-        }
-      - { label: "Author", name: "author", widget: "string" }
-      - { label: "Link", name: "link", widget: "string" }
-      - {
-          label: "Feature",
-          name: "feature",
-          widget: "boolean",
-          required: false,
-        }
-      - { label: "Body", name: "body", widget: "markdown" }
-  - name: "Codepen"
-    label: "CodePen"
-    folder: "src/codepen"
-    create: true
-    slug: "{{title}}"
-    fields:
-      - {
-          label: "Permalink",
-          name: "permalink",
-          widget: "hidden",
-          default: false,
-        }
-      - { label: "Tags", name: "tags", widget: "hidden", default: "codepen" }
-      - { label: "Title", name: "title", widget: "string" }
-      - { label: "Link", name: "link", widget: "string" }
-      - { label: "Description", name: "description", widget: "string", required: false }
-      - { label: "Tech", name: "tech", widget: "list", required: false }
-      - { label: "Cover", name: "cover", widget: "string" }
-      - { label: "Position", name: "position", widget: "number" }
-      - {
-          label: "Feature",
-          name: "feature",
-          widget: "boolean",
-          required: false,
-        }
-      - {
-          label: "Front Page",
-          name: "frontPage",
-          widget: "boolean",
-          required: false,
-        }
-      - {
-          label: "Most Hearted",
-          name: "hearted",
-          widget: "date",
-          required: false,
-        }
-  - name: "Appearances"
-    label: "Appearances"
-    folder: "src/appearances"
-    create: true
-    slug: "appearance-{{title}}"
-    fields:
-      - { label: "Title", name: "title", widget: "string" }
-      - { label: "Link", name: "link", widget: "string" }
-      - {
-          label: "Front page",
-          name: "frontPage",
-          widget: "boolean",
-          required: false,
-        }
-      - {
-          label: "Feature",
-          name: "feature",
-          widget: "boolean",
-          required: false,
-        }
-      - { label: "Date", name: "date", widget: "date", required: false }
-      - {
-          label: "Description",
-          name: "description",
-          widget: "markdown",
-          required: false,
-        }
-  - name: "Features"
-    label: "Features"
-    folder: "src/features"
-    create: true
-    slug: "feature-{{title}}"
-    fields:
-      - { label: "Title", name: "title", widget: "string" }
-      - { label: "Link", name: "link", widget: "string" }
-      - { label: "Date", name: "date", widget: "date", required: false }
-      - {
-          label: "Description",
-          name: "description",
-          widget: "markdown",
-          required: false,
-        }
-  - name: "Projects"
-    label: "Projects"
-    folder: "src/projects"
-    create: true
-    slug: "project-{{title}}"
-    fields:
-      - { label: "Title", name: "title", widget: "string" }
-      - {
-          label: "Front page",
-          name: "frontPage",
-          widget: "boolean",
-          required: false,
-        }
-      - {
-          label: "Feature",
-          name: "feature",
-          widget: "boolean",
-          required: false,
-        }
-      - { label: "Link", name: "link", widget: "string", required: true }
-      - { label: "Tech", name: "tech", widget: "list", required: true }
-      - { label: "Description", name: "description", widget: "markdown" }
-      - { label: "Cover", name: "cover", widget: "string", required: false }
-      - { label: "Video", name: "video", widget: "string", required: false }
-  - name: "Lessons"
-    label: "Lessons"
-    folder: "src/lessons"
-    create: true
-    slug: "lesson-{{title}}"
-    fields:
-      - { label: "Title", name: "title", widget: "string" }
-      - {
-          label: "Front page",
-          name: "frontPage",
-          widget: "boolean",
-          required: false,
-        }
-      - {
-          label: "Feature",
-          name: "feature",
-          widget: "boolean",
-          required: false,
-        }
-      - { label: "Link", name: "link", widget: "string" }
-      - { label: "Video", name: "video", widget: "string" }
-      - {
-          label: "Description",
-          name: "description",
-          widget: "markdown",
-          required: false,
-        }
-  - name: "Streams"
-    label: "Streams"
-    folder: "src/streams"
-    create: true
-    slug: "stream-{{title}}"
-    fields:
-      - { label: "Title", name: "title", widget: "string" }
-      - {
-          label: "Front page",
-          name: "frontPage",
-          widget: "boolean",
-          required: false,
-        }
-      - {
-          label: "Feature",
-          name: "feature",
-          widget: "boolean",
-          required: false,
-        }
-      - { label: "Link", name: "link", widget: "string" }
-      - {
-          label: "Description",
-          name: "description",
-          widget: "markdown",
-          required: false,
-        }
   - label: "Globals"
     name: "globals"
     files:
       - label: "Site Data"
         name: "site_data"
+        create: true
         delete: false
         file: "src/_data/site.json"
         fields:
@@ -388,16 +79,11 @@ collections:
           - { label: "Url", name: "url", widget: "string" }
           - { label: "Name", name: "name", widget: "string" }
           - { label: "Email Address", name: "email", widget: "string" }
-          - {
-              label: "Twitter Handle",
-              name: "twitter",
-              widget: "string",
-              required: false,
-            }
           - { label: "Description", name: "description", widget: "string" }
       - label: "Site Copy"
         name: "site_copy"
         delete: false
+        create: true
         file: "src/_data/copy.json"
         fields:
           - { label: "Tagline", name: "tagline", widget: "string" }
@@ -408,185 +94,11 @@ collections:
               widget: "markdown",
               required: false,
             }
-          - {
-              label: "CodePen Intro",
-              name: "codepenIntro",
-              widget: "markdown",
-              required: false,
-            }
-          - {
-              label: "Code Title",
-              name: "codeTitle",
-              widget: "markdown",
-              required: false,
-            }
-          - {
-              label: "Code Intro",
-              name: "codeIntro",
-              widget: "markdown",
-              required: false,
-            }
-          - {
-              label: "Code Outro",
-              name: "codeOutro",
-              widget: "markdown",
-              required: false,
-            }
-          - {
-              label: "Skills",
-              name: "skills",
-              widget: "list",
-              required: false,
-            }
-
-          - {
-              label: "Skills Intro",
-              name: "skillsIntro",
-              widget: "markdown",
-              required: false,
-            }
-          - {
-              label: "Stream Title",
-              name: "streamTitle",
-              widget: "markdown",
-              required: false,
-            }
-          - {
-              label: "Stream Intro",
-              name: "streamIntro",
-              widget: "markdown",
-              required: false,
-            }
-          - {
-              label: "Appearances Title",
-              name: "appearancesTitle",
-              widget: "markdown",
-              required: false,
-            }
-          - {
-              label: "Appearances Intro",
-              name: "appearancesIntro",
-              widget: "markdown",
-              required: false,
-            }
-          - {
-              label: "Writes Title",
-              name: "writesTitle",
-              widget: "markdown",
-              required: false,
-            }
-          - {
-              label: "Writes Intro",
-              name: "writesIntro",
-              widget: "markdown",
-              required: false,
-            }
-          - {
-              label: "Teaches Title",
-              name: "teachesTitle",
-              widget: "markdown",
-              required: false,
-            }
-          - {
-              label: "Teaches Intro",
-              name: "teachesIntro",
-              widget: "markdown",
-              required: false,
-            }
-          - {
-              label: "Projects Title",
-              name: "projectsTitle",
-              widget: "markdown",
-              required: false,
-            }
-          - {
-              label: "Projects Intro",
-              name: "projectsIntro",
-              widget: "markdown",
-              required: false,
-            }
-          - {
-            label: "Featured Project Intro",
-            name: "featuredProjectIntro",
-            widget: "markdown",
-            required: false,
-            }
-          - {
-              label: "Contact Title",
-              name: "contactTitle",
-              widget: "markdown",
-              required: false,
-            }
-          - {
-              label: "Contact Intro",
-              name: "contactIntro",
-              widget: "markdown",
-              required: false,
-            }
-          - {
-              label: "Writing Title",
-              name: "writingTitle",
-              widget: "markdown",
-              required: false,
-            }
-          - {
-              label: "Writing Intro",
-              name: "writingIntro",
-              widget: "markdown",
-              required: false,
-            }
-          - {
-              label: "Scrapbook Title",
-              name: "scrapbookTitle",
-              widget: "markdown",
-              required: false,
-            }
-          - {
-              label: "Scrapbook Intro",
-              name: "scrapbookIntro",
-              widget: "markdown",
-              required: false,
-            }
-          - {
-              label: "Contact Page Title",
-              name: "contactPageTitle",
-              widget: "markdown",
-              required: false,
-            }
-          - {
-              label: "Contact Page Intro",
-              name: "contactPageIntro",
-              widget: "markdown",
-              required: false,
-            }
-          - {
-              label: "Author Title",
-              name: "authorTitle",
-              widget: "markdown",
-              required: false,
-            }
-          - {
-              label: "Author Blurb",
-              name: "authorBlurb",
-              widget: "markdown",
-              required: false,
-            }
-          - {
-              label: "Scrapbook Footer",
-              name: "scrapFooter",
-              widget: "markdown",
-              required: false,
-            }
-          - {
-              label: "Post Footer",
-              name: "postFooter",
-              widget: "markdown",
-              required: false,
-            }
       - label: "Socials"
         name: "socials"
         delete: false
-        file: "src/_data/socials.json"
+        create: true
+        file: "data/socials.json"
         fields:
           - label: "CodePen"
             name: "codepen"
@@ -609,63 +121,6 @@ collections:
                 }
           - label: "Github"
             name: "github"
-            widget: "object"
-            collapsed: true
-            fields:
-              - { label: "Url", name: "url", widget: "string", required: false }
-              - {
-                  label: "Title",
-                  name: "title",
-                  widget: "string",
-                  required: false,
-                }
-              - {
-                  label: "Shown",
-                  name: "visible",
-                  widget: "boolean",
-                  default: true,
-                  required: false,
-                }
-          - label: "Instagram"
-            name: "instagram"
-            widget: "object"
-            collapsed: true
-            fields:
-              - { label: "Url", name: "url", widget: "string", required: false }
-              - {
-                  label: "Title",
-                  name: "title",
-                  widget: "string",
-                  required: false,
-                }
-              - {
-                  label: "Shown",
-                  name: "visible",
-                  widget: "boolean",
-                  default: true,
-                  required: false,
-                }
-          - label: "LinkedIn"
-            name: "linkedin"
-            widget: "object"
-            collapsed: true
-            fields:
-              - { label: "Url", name: "url", widget: "string", required: false }
-              - {
-                  label: "Title",
-                  name: "title",
-                  widget: "string",
-                  required: false,
-                }
-              - {
-                  label: "Shown",
-                  name: "visible",
-                  widget: "boolean",
-                  default: true,
-                  required: false,
-                }
-          - label: "Twitch"
-            name: "twitch"
             widget: "object"
             collapsed: true
             fields:
