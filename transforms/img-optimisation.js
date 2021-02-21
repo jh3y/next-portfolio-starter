@@ -27,18 +27,19 @@ module.exports = () => {
       internalImages.forEach((IMG) => {
         // Enhance the image element using Sharp based on the sizing and return a new element.
         const SRC = IMG.getAttribute('src')
-        const SIZES = IMG.parentNode.getAttribute('data-widths').split(',')
+        const SIZES = IMG.parentNode.getAttribute('data-sizes').split(',')
         const INPUT = `${process.cwd()}/public${SRC}`
         const INSTANCE = sharp(INPUT)
         for (const TYPE of CONFIG.images.types) {
           for (const SIZE of SIZES) {
+            const DIMENSION = parseInt(SIZE.replace(/\([^)]*\)\s?/gm, ''), 10)
             const OUTPUT_PATH = `${process.cwd()}/public/enhanced${SRC.substring(
               0,
               SRC.lastIndexOf('.')
-            )}_${SIZE}.${TYPE}`
+            )}_${DIMENSION}.${TYPE}`
             if (!fs.existsSync(OUTPUT_PATH)) {
               const CLONE = INSTANCE.clone()
-              CLONE.resize(parseInt(SIZE, 10))[TYPE]().toFile(OUTPUT_PATH)
+              CLONE.resize(parseInt(DIMENSION, 10))[TYPE]().toFile(OUTPUT_PATH)
               LOGGER.info(`Enhancement: ${OUTPUT_PATH}`)
             }
           }

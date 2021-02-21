@@ -7,7 +7,9 @@ class MyDocument extends Document {
         {/**
           TODO:: Insert common things here.
         */}
-        <Head />
+        <Head>
+          <meta name="description" content="A Portfolio accelerator built with Next.js, Storybook, Tailwind, and Netlify CMS" />
+        </Head>
         <body>
           <Main />
           <NextScript />
