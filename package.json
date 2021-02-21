@@ -13,7 +13,7 @@
     "lint-fix": "eslint ./ --fix"
   },
   "lint-staged": {
-    "pages/**/*.{js,json,css}": [
+    "pages/**/*.js": [
       "eslint",
       "prettier --write",
       "git add"

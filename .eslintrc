@@ -29,17 +29,6 @@
     "react-hooks"
   ],
   "rules": {
-    "prettier/prettier": [
-      2,
-      {
-        "trailingComma": "es5",
-        "singleQuote": true,
-        "printWidth": 80,
-        "semi": false,
-        "parser": "flow",
-        "jsxBracketSameLine": true
-      }
-    ],
     "no-unused-vars": 2,
     "no-console": 2,
     "no-restricted-syntax": 2,
