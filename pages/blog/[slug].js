@@ -75,9 +75,6 @@ export async function getStaticPaths() {
     .map((path) => path.replace(/\.mdx?$/, ''))
     // Map the path into the static paths object required by Next.js
     .map((slug) => ({ params: { slug } }))
-
-  console.info(postFilePaths, paths)
-
   return {
     paths,
     fallback: false,

@@ -17,6 +17,7 @@ const Blog = ({ posts }) => {
   return (
     <Layout>
       <h1>Blog</h1>
+      <p>Check out the latest posts</p>
       <ul>
         {posts.map((post) => {
           return (
