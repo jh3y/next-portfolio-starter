@@ -22,7 +22,9 @@ const Blog = ({ posts }) => {
         {posts.map((post) => {
           return (
             <li key={post.filePath}>
-              <Link href={`/blog/${post.slug}`}>{post.data.title}</Link>
+              <Link href={`/blog/${encodeURIComponent(post.slug)}`}>
+                {post.data.title}
+              </Link>
             </li>
           )
         })}

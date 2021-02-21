@@ -10,7 +10,9 @@
     "postbuild": "node transforms/img-optimisation.js && next export && node transforms/html-minifier.js",
     "start": "next start",
     "lint": "eslint ./",
-    "lint-fix": "eslint ./ --fix"
+    "lint-fix": "eslint ./ --fix",
+    "storybook": "start-storybook -p 6006 -s public",
+    "build-storybook": "build-storybook"
   },
   "lint-staged": {
     "pages/**/*.js": [
@@ -26,6 +28,7 @@
     }
   },
   "dependencies": {
+    "@storybook/addon-postcss": "^2.0.0",
     "@tailwindcss/typography": "^0.4.0",
     "autoprefixer": "^10.2.4",
     "babel-eslint": "^10.1.0",
@@ -57,5 +60,13 @@
     "react-dom": "17.0.1",
     "sharp": "^0.27.1",
     "tailwindcss": "^2.0.3"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.12.17",
+    "@storybook/addon-actions": "^6.2.0-alpha.32",
+    "@storybook/addon-essentials": "^6.2.0-alpha.32",
+    "@storybook/addon-links": "^6.2.0-alpha.32",
+    "@storybook/react": "^6.2.0-alpha.32",
+    "babel-loader": "^8.2.2"
   }
 }

@@ -7,6 +7,7 @@ const ThemeToggle = () => {
   const toggleRef = useRef(null)
   useEffect(() => {
     document.body.className = pressed ? 'dark' : ''
+    console.info('hurrah')
   }, [setPressed, pressed])
   return (
     <Fragment>
