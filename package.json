@@ -5,7 +5,9 @@
   "license": "MIT",
   "scripts": {
     "dev": "npx netlify-cms-proxy-server & next dev & node admin/config-watcher.js",
-    "build": "NODE_ENV=production cp admin/config.yml public/config.yml && next build && next export && node transforms/transform.js",
+    "prebuild": "rm -rf out && cp admin/config.yml public/config.yml",
+    "build": "next build",
+    "postbuild": "node transforms/img-optimisation.js && next export && node transforms/html-minifier.js",
     "start": "next start",
     "lint": "eslint ./",
     "lint-fix": "eslint ./ --fix"

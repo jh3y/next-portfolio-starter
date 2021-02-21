@@ -1,6 +1,8 @@
 [build]
   command = "yarn build"
   publish = "out"
+[[plugins]]
+  package = "netlify-plugin-cache-nextjs"
 [[headers]]
   for = "/*"
   [headers.values]

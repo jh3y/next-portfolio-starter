@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import Layout from '@/components/layout'
 import Image from '@/components/image'
-// import Image from 'next/image'
+import NextImage from 'next/image'
 
 export default function Home() {
   return (
@@ -20,6 +20,12 @@ export default function Home() {
           width={250}
           height={250}
           sizes={['(max-width: 400px) 100px', '250px']}
+        />
+        <NextImage
+          src="/images/galaxy_vbrntm.jpg"
+          alt="Stars at night"
+          width={250}
+          height={250}
         />
       </main>
     </Layout>

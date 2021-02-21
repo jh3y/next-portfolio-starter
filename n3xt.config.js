@@ -1,5 +1,5 @@
 module.exports = {
   images: {
-    types: ['avif', 'webp', 'png']
-  }
+    types: ['avif', 'webp', 'png'],
+  },
 }

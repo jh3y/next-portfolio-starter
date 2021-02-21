@@ -1,34 +1,117 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Next Portfolio Starter
+A portfolio starter using:
 
-## Getting Started
+- `next.js`
+- `tailwindcss`
+- `storybook`
+- `netlify cms`
 
-First, run the development server:
+:warning: __READ THIS__ :warning:
+This starter is intended for exported static sites. Think of it like an opinionated hybrid of `11ty` with `React`. It's intended to be used with `Netlify`. That gives us the opportunity to use all of the Netlify "perks" such as `CMS`, `forms`, `functions`, `analytics`, etc. with ease. All that whilst still being able to use the DX of Next.js.
+## Image Optimisation Options
+Image optimisation __isn't__ straight forward.
+You've got options here. I've tried to cover the bases how I might go about it. The cool thing is, you can use both. They're not mutually exclusive. But, they do work differently.
 
-```bash
-npm run dev
-# or
-yarn dev
+### Using `Image` with `sharp` optimisation
+Going with this option means that you use images normally as you would by putting them inside `/public`. However, you use the `Image` component located at `@/components/image`.
+
+```jsx
+<Image
+  className="w-24 h-24"
+  src="/images/awesome.jpg"
+  alt="An awesome picture"
+  width={250}
+  height={250}
+  sizes={['(max-width: 400px) 100px', '250px']}
+/>
+```
+It's like a normal `img` but you can pass it `sizes`. And these sizes get applied to `source` elements within a `picture` element. At build time, any images that need to be, get optimised. Under the hood, `sharp` processes images in the `public` folder that use this component. The output directory defaults to `enhanced/images`.
+
+For example, at build time, the component above renders.
+
+```html
+<picture data-sizes="(max-width: 400px) 100px,250px" class="block w-24 h-24">
+  <source
+    type="image/avif"
+    srcset="/enhanced/images/awesome_100.avif 100w,/enhanced/images/awesome_250.avif 250w"
+    sizes="(max-width: 400px) 100px,250px">
+  <source
+    type="image/webp"
+    srcset="/enhanced/images/awesome_100.webp 100w,/enhanced/images/awesome_250.webp 250w"
+    sizes="(max-width: 400px) 100px,250px">
+  <source
+    type="image/png"
+    srcset="/enhanced/images/awesome_100.png 100w,/enhanced/images/awesome_250.png 250w"
+    sizes="(max-width: 400px) 100px,250px">
+  <img
+    src="/images/awesome.jpg"
+    alt="An awesome picture"
+    class="h-full w-full object-cover"
+    loading="lazy"
+    decoding="async"
+    width="250"
+    height="250">
+</picture>
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Need to pass styles down to that nested image? Use the `imgProps` prop to pass things down.
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+```jsx
+<Image
+  className="w-24 h-24"
+  imgProps={{
+    className: "h-full w-full object-cover",
+  }}
+  src="/images/awesome.jpg"
+  alt="An awesome picture"
+  width={250}
+  height={250}
+  sizes={['(max-width: 400px) 100px', '250px']}
+/>
+```
+You can optimise in various formats supported by `sharp`. Export a config from `n3xt.config.js` with the formats you want to use.
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+```javascript
+module.exports = {
+  images: {
+    types: ['avif', 'webp', 'png'],
+  },
+}
+```
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+__NOTE::__ This is all __very__ opinionated. I'd recommend digging into the components and the image optimisation code. Tweak `transforms/img-optimisation.js` to your tastes.
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+This method works by building the project using `next build` as normal. But, it then scrapes the build output and generates  optimised assets before export. Assets are only generated when needed. If they already exist, they aren't generated again unless deleted.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Using `next/image`
+Now for `next/image`. It works the same as usual. But, you'll hit issues if you try exporting with the `default` loader. Using a CDN for images that use `next/image` is the option here. But, you don't want to use up all your bandwidth whilst working on your site!
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+For this, use environment variables. Store the path for your CDN provider in `.env.local`.
 
-## Deploy on Vercel
+And then switch between loader based on `process.env.NODE_ENV`. For example, with `cloudinary`.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```javascript
+module.exports = {
+  images: {
+    loader: process.env.NODE_ENV !== 'production' ? 'default' : 'cloudinary',
+    domains: ['res.cloudinary.com', 'localhost'],
+    ...(process.env.NODE_ENV === 'production' && {
+      path: process.env.CLOUDINARY_PATH,
+    }),
+  },
+}
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+The caveat here is that you must mirror the media paths from your CDN provider to your public folder.
+
+For example,
+```
+https://res.cloudinary.com/<username>/image/upload/images/awesome.png
+```
+
+Would map to.
+```
+/public/images/awesome.png
+```

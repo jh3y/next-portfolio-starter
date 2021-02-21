@@ -1,6 +1,9 @@
 module.exports = {
   images: {
-    loader: 'cloudinary',
-    path: 'https://res.cloudinary.com/jh3yy/image/upload/v1613871921',
+    loader: process.env.NODE_ENV !== 'production' ? 'default' : 'cloudinary',
+    domains: ['res.cloudinary.com', 'localhost'],
+    ...(process.env.NODE_ENV === 'production' && {
+      path: process.env.CLOUDINARY_PATH,
+    }),
   },
 }
