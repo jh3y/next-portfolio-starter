@@ -7,7 +7,23 @@ A portfolio starter using:
 - `netlify cms`
 
 :warning: __READ THIS__ :warning:
-This starter is intended for exported static sites. Think of it like an opinionated hybrid of `11ty` with `React`. It's intended to be used with `Netlify`. That gives us the opportunity to use all of the Netlify "perks" such as `CMS`, `forms`, `functions`, `analytics`, etc. with ease. All that whilst still being able to use the DX of Next.js.
+This starter is currently a WIP. There's a bunch of stuff getting added at the moment. You're free to take it and use it if you like as-is. But, there will be some large changes with regards to how things work. Also, there are a lot of features on the way which are useful:
+
+- ~~404~~
+- Reading time
+- Persisted theming
+- MDX components
+- Code block highlighting
+- RSS
+- Contact forms
+
+This starter is intended for exported static sites. Think of it like an opinionated hybrid of `11ty` with `React`. It's intended to be used with `Netlify`. That gives us the opportunity to use all of the Netlify "perks" such as `CMS`, `forms`, `functions`, `analytics`, etc. with ease. All that whilst still being able to
+use the DX of Next.js.
+
+## Use Netlify CMS Locally
+Relies on `netlify-cms-proxy-server` and using `local_backend` is a beta feature discussed [here](https://www.netlifycms.org/docs/beta-features/#working-with-a-local-git-repository).
+
+- TODO:: Check if this works on a fresh non-netlify initialised repository. Write up the steps required.
 ## Image Optimisation Options
 Image optimisation __isn't__ straight forward.
 You've got options here. I've tried to cover the bases how I might go about it. The cool thing is, you can use both. They're not mutually exclusive. But, they do work differently.

@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "npx netlify-cms-proxy-server & next dev & node admin/config-watcher.js",
     "prebuild": "rm -rf out && cp admin/config.yml public/config.yml",
-    "build": "next build",
+    "build": "NODE_ENV=production next build",
     "postbuild": "node transforms/img-optimisation.js && next export && node transforms/html-minifier.js",
     "start": "next start",
     "lint": "eslint ./",
@@ -21,11 +21,6 @@
       "git add"
     ],
     "*.js": "eslint --cache --fix"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
   },
   "dependencies": {
     "@storybook/addon-postcss": "^2.0.0",
@@ -46,9 +41,7 @@
     "globby": "^11.0.2",
     "gray-matter": "^4.0.2",
     "html-minifier": "^4.0.0",
-    "husky": "^4.3.0",
     "jsdom": "^16.4.0",
-    "lint-staged": "^10.5.4",
     "netlify-cms-app": "^2.14.23",
     "next": "10.0.7",
     "next-mdx-remote": "^2.1.3",

@@ -8,7 +8,6 @@ export default function Home() {
     <Layout>
       <Head>
         <title>Home: next-portfolio-starter</title>
-        <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className="prose lg:prose-xl mx-auto">
         <h1>Next Portfolio Starter</h1>
