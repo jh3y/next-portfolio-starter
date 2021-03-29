@@ -3,7 +3,7 @@ import Head from 'next/head'
 import ThemeToggle from '@/components/theme-toggle'
 const Layout = ({ children }) => {
   return (
-    <div className="dark:bg-red-200 bg-blue-100 min-h-screen">
+    <div className="dark:bg-red-200 bg-blue-200 min-h-screen">
       <Head>
         <title>Create Next App</title>
         <link rel="icon" href="/favicon.ico" />
